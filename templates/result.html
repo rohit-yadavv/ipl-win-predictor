@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+
+  <body>
+    <div class="">
+      <header class="absolute inset-x-0 top-0 z-50">
+        <!-- Mobile menu, show/hide based on menu open state. -->
+        <div class="lg:hidden" role="dialog" aria-modal="true">
+          <!-- Background backdrop, show/hide based on slide-over state. -->
+        </div>
+      </header>
+
+      <div class="relative isolate pt-4 bg-[#040A25]">
+        <div
+          class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
+          aria-hidden="true"
+        >
+          <div
+            class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#f00f31] to-[#f00f31] opacity-20 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
+            style="
+              clip-path: polygon(
+                74.1% 44.1%,
+                100% 61.6%,
+                97.5% 26.9%,
+                85.5% 0.1%,
+                80.7% 2%,
+                72.5% 32.5%,
+                60.2% 62.4%,
+                52.4% 68.1%,
+                47.5% 58.3%,
+                45.2% 34.5%,
+                27.5% 76.7%,
+                0.1% 64.9%,
+                17.9% 100%,
+                27.6% 76.8%,
+                76.1% 97.7%,
+                74.1% 44.1%
+              );
+            "
+          ></div>
+        </div>
+        <div
+          class="content py-24 sm:py-16 lg:pb-40 mx-auto max-w-7xl px-6 lg:px-8"
+        >
+          <div class="mx-auto max-w-2xl text-center">
+            <h1
+              class="text-4xl font-bold tracking-tight text-white sm:text-6xl"
+            >
+              Prediction Results 🏏
+            </h1>
+            <p class="my-6 text-2xl leading-8 text-blue-300">
+              {{ batting_team }} Winning Probability: {{ win_probability }}%
+            </p>
+            <p class="my-6 text-2xl leading-8 text-blue-300">
+              {{ bowling_team }} Winning Probability: {{ loss_probability }}%
+            </p>
+            <div
+              class="my-2"
+              style="position: relative; width: 100%; height: 400px"
+            >
+              <canvas id="winningProbabilityChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Get the canvas element
+      var ctx = document.getElementById('winningProbabilityChart').getContext('2d');
+
+      // Define data for the pie chart
+      var data = {
+        labels: ['{{ batting_team }} Winning Probability', '{{ bowling_team }} Winning Probability'],
+        datasets: [{
+          data: [{{ win_probability }}, {{ loss_probability }}],
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.5)', // Red for batting team
+            'rgba(54, 162, 235, 0.5)', // Blue for bowling team
+          ],
+          borderColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+          ],
+          borderWidth: 1
+        }]
+      };
+
+      // Create and render the pie chart
+      var myPieChart = new Chart(ctx, {
+        type: 'pie',
+        data: data,
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          // Add any other options here as needed
+        }
+      });
+    </script>
+  </body>
+</html>
