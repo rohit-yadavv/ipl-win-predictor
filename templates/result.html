@@ -3,69 +3,162 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Prediction Results - IPL Victory Predictor</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+      * {
+        font-family: 'Inter', sans-serif;
+      }
+      body {
+        background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 25%, #f0f9ff 50%, #e0f2fe 75%, #f0f9ff 100%);
+        background-size: 400% 400%;
+        animation: gradientShift 15s ease infinite;
+        min-height: 100vh;
+      }
+      @keyframes gradientShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+      .card-shadow {
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      }
+      .animate-float {
+        animation: float 6s ease-in-out infinite;
+      }
+      @keyframes float {
+        0%, 100% { transform: translateY(0px) rotate(0deg); }
+        50% { transform: translateY(-20px) rotate(5deg); }
+      }
+      .gradient-text {
+        background: linear-gradient(135deg, #2563eb 0%, #7c3aed 40%, #a855f7 60%, #ec4899 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .stat-card {
+        transition: all 0.3s ease;
+      }
+      .stat-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+      }
+      .progress-bar {
+        transition: width 1.5s ease-out;
+      }
+    </style>
+    <script>
+      // Initialize Lucide icons
+      document.addEventListener('DOMContentLoaded', function() {
+        lucide.createIcons();
+      });
+    </script>
   </head>
 
-  <body>
-    <div class="">
-      <header class="absolute inset-x-0 top-0 z-50">
-        <!-- Mobile menu, show/hide based on menu open state. -->
-        <div class="lg:hidden" role="dialog" aria-modal="true">
-          <!-- Background backdrop, show/hide based on slide-over state. -->
-        </div>
-      </header>
+  <body class="text-gray-900">
+    <div class="relative min-h-screen overflow-hidden">
+      <!-- Decorative Background Elements -->
+      <div class="absolute inset-0 overflow-hidden pointer-events-none">
+        <div class="absolute top-20 right-20 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-float"></div>
+        <div class="absolute bottom-20 left-20 w-72 h-72 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-float" style="animation-delay: 2s;"></div>
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-pink-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-float" style="animation-delay: 4s;"></div>
+      </div>
 
-      <div class="relative isolate pt-4 bg-[#040A25]">
-        <div
-          class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
-          aria-hidden="true"
-        >
-          <div
-            class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#f00f31] to-[#f00f31] opacity-20 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
-            style="
-              clip-path: polygon(
-                74.1% 44.1%,
-                100% 61.6%,
-                97.5% 26.9%,
-                85.5% 0.1%,
-                80.7% 2%,
-                72.5% 32.5%,
-                60.2% 62.4%,
-                52.4% 68.1%,
-                47.5% 58.3%,
-                45.2% 34.5%,
-                27.5% 76.7%,
-                0.1% 64.9%,
-                17.9% 100%,
-                27.6% 76.8%,
-                76.1% 97.7%,
-                74.1% 44.1%
-              );
-            "
-          ></div>
-        </div>
-        <div
-          class="content py-24 sm:py-16 lg:pb-40 mx-auto max-w-7xl px-6 lg:px-8"
-        >
-          <div class="mx-auto max-w-2xl text-center">
-            <h1
-              class="text-4xl font-bold tracking-tight text-white sm:text-6xl"
-            >
-              Prediction Results 🏏
+      <!-- Main Content -->
+      <div class="relative z-10 min-h-screen flex flex-col">
+        <!-- Header -->
+        <header class="pt-12 pb-8 px-6">
+          <div class="max-w-7xl mx-auto text-center">
+            <div class="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl mb-6 shadow-lg transform hover:scale-105 transition-transform">
+              <i data-lucide="bar-chart-3" class="w-10 h-10 text-white"></i>
+            </div>
+            <h1 class="text-3xl md:text-4xl font-bold mb-3">
+              <span class="gradient-text">Prediction Results</span>
             </h1>
-            <p class="my-6 text-2xl leading-8 text-blue-300">
-              {{ batting_team }} Winning Probability: {{ win_probability }}%
-            </p>
-            <p class="my-6 text-2xl leading-8 text-blue-300">
-              {{ bowling_team }} Winning Probability: {{ loss_probability }}%
-            </p>
-            <div
-              class="my-2"
-              style="position: relative; width: 100%; height: 400px"
-            >
-              <canvas id="winningProbabilityChart"></canvas>
+            <p class="text-base md:text-lg text-gray-600 font-medium">AI-Powered Match Analysis</p>
+          </div>
+        </header>
+
+        <!-- Results Section -->
+        <div class="flex-1 flex items-center justify-center px-6 py-8 pb-16">
+          <div class="max-w-6xl w-full">
+            <!-- Team Stats Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+              <!-- Batting Team Card -->
+              <div class="stat-card bg-white/90 backdrop-blur-xl rounded-3xl p-8 card-shadow border-2 border-gray-100" id="batting-card">
+                <div class="flex items-center justify-between mb-6">
+                  <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
+                      <i data-lucide="users" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900">{{ batting_team }}</h3>
+                  </div>
+                  <span id="batting-winner-icon" style="display: none;">
+                    <div class="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center shadow-lg">
+                      <i data-lucide="trophy" class="w-6 h-6 text-white"></i>
+                    </div>
+                  </span>
+                </div>
+                <div class="mb-6">
+                  <div class="flex items-baseline gap-3 mb-2">
+                    <span class="text-6xl font-black text-gray-900">{{ win_probability }}%</span>
+                    <span class="text-lg font-semibold text-gray-500">Win Probability</span>
+                  </div>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-4 overflow-hidden shadow-inner">
+                  <div class="bg-gradient-to-r from-blue-500 via-blue-600 to-purple-600 h-full rounded-full progress-bar shadow-lg" style="width: {{ win_probability }}%"></div>
+                </div>
+              </div>
+
+              <!-- Bowling Team Card -->
+              <div class="stat-card bg-white/90 backdrop-blur-xl rounded-3xl p-8 card-shadow border-2 border-gray-100" id="bowling-card">
+                <div class="flex items-center justify-between mb-6">
+                  <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl flex items-center justify-center shadow-lg">
+                      <i data-lucide="shield" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900">{{ bowling_team }}</h3>
+                  </div>
+                  <span id="bowling-winner-icon" style="display: none;">
+                    <div class="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center shadow-lg">
+                      <i data-lucide="trophy" class="w-6 h-6 text-white"></i>
+                    </div>
+                  </span>
+                </div>
+                <div class="mb-6">
+                  <div class="flex items-baseline gap-3 mb-2">
+                    <span class="text-6xl font-black text-gray-900">{{ loss_probability }}%</span>
+                    <span class="text-lg font-semibold text-gray-500">Win Probability</span>
+                  </div>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-4 overflow-hidden shadow-inner">
+                  <div class="bg-gradient-to-r from-pink-500 via-purple-600 to-red-600 h-full rounded-full progress-bar shadow-lg" style="width: {{ loss_probability }}%"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Chart Card -->
+            <div class="bg-white/90 backdrop-blur-xl rounded-3xl p-8 md:p-12 card-shadow border-2 border-gray-100 mb-8">
+              <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold text-gray-900 mb-2">Visual Probability Distribution</h2>
+                <p class="text-gray-600">Interactive chart showing win probabilities</p>
+              </div>
+              <div class="relative" style="height: 450px;">
+                <canvas id="winningProbabilityChart"></canvas>
+              </div>
+            </div>
+
+            <!-- Back Button -->
+            <div class="text-center">
+              <a href="/" class="group inline-flex items-center gap-3 px-10 py-4 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 rounded-2xl text-white font-bold text-lg shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300">
+                <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                Make Another Prediction
+              </a>
             </div>
           </div>
         </div>
@@ -76,33 +169,111 @@
       // Get the canvas element
       var ctx = document.getElementById('winningProbabilityChart').getContext('2d');
 
-      // Define data for the pie chart
+      // Determine which team is winning
+      var winProb = {{ win_probability }};
+      var lossProb = {{ loss_probability }};
+      var isBattingWinning = winProb > lossProb;
+
+      // Update card styles based on winner
+      var battingCard = document.getElementById('batting-card');
+      var bowlingCard = document.getElementById('bowling-card');
+      var battingIcon = document.getElementById('batting-winner-icon');
+      var bowlingIcon = document.getElementById('bowling-winner-icon');
+
+      if (isBattingWinning) {
+        battingCard.style.borderColor = '#10b981';
+        battingCard.style.boxShadow = '0 20px 25px -5px rgba(16, 185, 129, 0.1), 0 10px 10px -5px rgba(16, 185, 129, 0.04)';
+        battingIcon.style.display = 'block';
+        bowlingCard.style.borderColor = '#ef4444';
+        bowlingCard.style.boxShadow = '0 20px 25px -5px rgba(239, 68, 68, 0.1), 0 10px 10px -5px rgba(239, 68, 68, 0.04)';
+      } else {
+        bowlingCard.style.borderColor = '#10b981';
+        bowlingCard.style.boxShadow = '0 20px 25px -5px rgba(16, 185, 129, 0.1), 0 10px 10px -5px rgba(16, 185, 129, 0.04)';
+        bowlingIcon.style.display = 'block';
+        battingCard.style.borderColor = '#ef4444';
+        battingCard.style.boxShadow = '0 20px 25px -5px rgba(239, 68, 68, 0.1), 0 10px 10px -5px rgba(239, 68, 68, 0.04)';
+      }
+
+      // Define data for the chart with modern colors
       var data = {
-        labels: ['{{ batting_team }} Winning Probability', '{{ bowling_team }} Winning Probability'],
+        labels: ['{{ batting_team }}', '{{ bowling_team }}'],
         datasets: [{
-          data: [{{ win_probability }}, {{ loss_probability }}],
+          data: [winProb, lossProb],
           backgroundColor: [
-            'rgba(255, 99, 132, 0.5)', // Red for batting team
-            'rgba(54, 162, 235, 0.5)', // Blue for bowling team
+            'rgba(59, 130, 246, 0.85)', // Blue for batting team
+            'rgba(236, 72, 153, 0.85)', // Pink for bowling team
           ],
           borderColor: [
-            'rgba(255, 99, 132, 1)',
-            'rgba(54, 162, 235, 1)',
+            'rgba(59, 130, 246, 1)',
+            'rgba(236, 72, 153, 1)',
           ],
-          borderWidth: 1
+          borderWidth: 4,
+          hoverOffset: 15,
+          hoverBorderWidth: 6
         }]
       };
 
-      // Create and render the pie chart
+      // Create and render the doughnut chart with modern styling
       var myPieChart = new Chart(ctx, {
-        type: 'pie',
+        type: 'doughnut',
         data: data,
         options: {
           responsive: true,
           maintainAspectRatio: false,
-          // Add any other options here as needed
+          cutout: '65%',
+          plugins: {
+            legend: {
+              position: 'bottom',
+              labels: {
+                color: '#374151',
+                font: {
+                  size: 16,
+                  weight: '600',
+                  family: "'Inter', sans-serif"
+                },
+                padding: 25,
+                usePointStyle: true,
+                pointStyle: 'circle'
+              }
+            },
+            tooltip: {
+              backgroundColor: 'rgba(255, 255, 255, 0.95)',
+              titleColor: '#1f2937',
+              bodyColor: '#4b5563',
+              borderColor: '#e5e7eb',
+              borderWidth: 2,
+              padding: 16,
+              displayColors: true,
+              titleFont: {
+                size: 16,
+                weight: '700',
+                family: "'Inter', sans-serif"
+              },
+              bodyFont: {
+                size: 14,
+                weight: '600',
+                family: "'Inter', sans-serif"
+              },
+              callbacks: {
+                label: function(context) {
+                  return context.label + ': ' + context.parsed + '%';
+                }
+              }
+            }
+          },
+          animation: {
+            animateRotate: true,
+            animateScale: true,
+            duration: 2000,
+            easing: 'easeOutQuart'
+          }
         }
       });
+
+      // Re-initialize icons after chart renders
+      setTimeout(function() {
+        lucide.createIcons();
+      }, 100);
     </script>
   </body>
 </html>

@@ -3,8 +3,54 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>IPL Victory Predictor</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+      * {
+        font-family: 'Inter', sans-serif;
+      }
+      body {
+        background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 25%, #f0f9ff 50%, #e0f2fe 75%, #f0f9ff 100%);
+        background-size: 400% 400%;
+        animation: gradientShift 15s ease infinite;
+        min-height: 100vh;
+      }
+      @keyframes gradientShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+      .card-shadow {
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      }
+      .input-focus:focus {
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        border-color: #3b82f6;
+      }
+      .animate-float {
+        animation: float 6s ease-in-out infinite;
+      }
+      @keyframes float {
+        0%, 100% { transform: translateY(0px) rotate(0deg); }
+        50% { transform: translateY(-20px) rotate(5deg); }
+      }
+      .gradient-text {
+        background: linear-gradient(135deg, #2563eb 0%, #7c3aed 40%, #a855f7 60%, #ec4899 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      select, input {
+        color: #1f2937;
+      }
+      select option {
+        color: #1f2937;
+      }
+    </style>
     <script>
       function validateTeams() {
         var battingTeam = document.getElementById("batting_team").value;
@@ -14,323 +60,240 @@
           alert("Batting Team and Bowling Team cannot be the same.");
           return false;
         }
-
         return true;
       }
+      
+      // Initialize Lucide icons
+      document.addEventListener('DOMContentLoaded', function() {
+        lucide.createIcons();
+      });
     </script>
   </head>
 
-  <body>
-    <div class="bg-blue-900">
-      <header class="absolute inset-x-0 top-0 z-50">
-        <div class="lg:hidden" role="dialog" aria-modal="true"></div>
-      </header>
+  <body class="text-gray-900">
+    <div class="relative min-h-screen overflow-hidden">
+      <!-- Decorative Background Elements -->
+      <div class="absolute inset-0 overflow-hidden pointer-events-none">
+        <div class="absolute top-20 right-20 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-float"></div>
+        <div class="absolute bottom-20 left-20 w-72 h-72 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-float" style="animation-delay: 2s;"></div>
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-pink-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-float" style="animation-delay: 4s;"></div>
+      </div>
 
-      <div class="relative isolate pt-4 bg-[#040A25]">
-        <div
-          class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
-          aria-hidden="true"
-        >
-          <div
-            class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#f00f31] to-[#f00f31] opacity-20 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
-            style="
-              clip-path: polygon(
-                74.1% 44.1%,
-                100% 61.6%,
-                97.5% 26.9%,
-                85.5% 0.1%,
-                80.7% 2%,
-                72.5% 32.5%,
-                60.2% 62.4%,
-                52.4% 68.1%,
-                47.5% 58.3%,
-                45.2% 34.5%,
-                27.5% 76.7%,
-                0.1% 64.9%,
-                17.9% 100%,
-                27.6% 76.8%,
-                76.1% 97.7%,
-                74.1% 44.1%
-              );
-            "
-          ></div>
-        </div>
-        <div>
-          <div class="w-full flex items-center justify-center flex-col">
-            <h1
-              class="text-4xl pt-14 text-center font-bold tracking-tight text-white sm:text-6xl"
-            >
-              IPL Victory Predictor
-              <br />
+      <!-- Main Content -->
+      <div class="relative z-10">
+        <!-- Header Section -->
+        <header class="p-6">
+          <div class="max-w-7xl mx-auto text-center">
+            <div class="inline-flex items-center justify-center w-14 h-14 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl mb-6 shadow-lg transform hover:scale-105 transition-transform">
+              <i data-lucide="trophy" class="w-8 h-8 text-white"></i>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">
+              <span class="gradient-text">IPL Victory Predictor</span>
             </h1>
-            <h3></h3>
-            <p class="mt-6 p-2 text-lg text-center leading-8 text-blue-300">
-              Not sure who will win the IPL match? Check our predictions🏏
+            <p class="text-base md:text-lg text-gray-600 max-w-2xl mx-auto font-medium">
+              Predict match outcomes with AI-powered analytics. Get real-time win probability based on live match data.
             </p>
           </div>
-        </div>
-        <div
-          class="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]"
-          aria-hidden="true"
-        >
-          <div
-            class="relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-[#f00f31] to-[#f00f31] opacity-20 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]"
-            style="
-              clip-path: polygon(
-                74.1% 44.1%,
-                100% 61.6%,
-                97.5% 26.9%,
-                85.5% 0.1%,
-                80.7% 2%,
-                72.5% 32.5%,
-                60.2% 62.4%,
-                52.4% 68.1%,
-                47.5% 58.3%,
-                45.2% 34.5%,
-                27.5% 76.7%,
-                0.1% 64.9%,
-                17.9% 100%,
-                27.6% 76.8%,
-                76.1% 97.7%,
-                74.1% 44.1%
-              );
-            "
-          ></div>
-        </div>
-      </div>
-    </div>
+        </header>
 
-    <!-- /------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
-    <div class="bg-[#040A25] text-white py-14">
-      <div class="relative pt-14">
-        <svg
-          class="absolute inset-0 -z-10 h-full w-full stroke-white/10 [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)]"
-          aria-hidden="true"
-        >
-          <defs>
-            <pattern
-              id="83fd4e5a-9d52-42fc-97b6-718e5d7ee527"
-              width="200"
-              height="200"
-              x="50%"
-              y="-1"
-              patternUnits="userSpaceOnUse"
-            >
-              <path d="M100 200V.5M.5 .5H200" fill="none" />
-            </pattern>
-          </defs>
-          <svg x="50%" y="-1" class="overflow-visible fill-indigo-900/10">
-            <path
-              d="M-100.5 0h201v201h-201Z M699.5 0h201v201h-201Z M499.5 400h201v201h-201Z M-300.5 600h201v201h-201Z"
-              stroke-width="0"
-            />
-          </svg>
-          <rect
-            width="100%"
-            height="100%"
-            stroke-width="0"
-            fill="url(#83fd4e5a-9d52-42fc-97b6-718e5d7ee527)"
-          />
-        </svg>
-        <div
-          class="mx-auto max-w-7xl p-6 py-8 gap-2 flex flex-col items-center justify-center"
-        >
-          <div class="mx-auto maxw-100% p-4 lg:mx-0 lg:flex-auto">
-            <div class="flex"></div>
-
+        <!-- Form Section -->
+        <div class="max-w-6xl mx-auto p-6">
+          <div class="bg-white/80 backdrop-blur-xl rounded-3xl p-8 md:p-12 card-shadow border border-white/50">
             <form
               action="/predict"
               method="post"
               onsubmit="return validateTeams();"
-              class="flex flex-wrap flex-row items-center justify-center gap-2"
+              class="space-y-8"
             >
-              <div class="relative min-w-[250px] sm:w-1/3 w-1/1 my-2">
-                <select
-                  name="batting_team"
-                  id="batting_team"
-                  class="peer p-4 pe-9 block w-full bg-blue-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-blue-500 dark:border-transparent dark:text-white dark:focus:ring-blue-600 focus:pt-6 focus:pb-2 [&:not(:placeholder-shown)]:pt-6 [&:not(:placeholder-shown)]:pb-2 autofill:pt-6 autofill:pb-2"
-                >
-                  <option value="Mumbai Indians">Mumbai Indians</option>
-                  <option value="Gujarat Titans">Gujarat Titans</option>
-                  <option value="Kolkata Knight Riders">
-                    Kolkata Knight Riders
-                  </option>
-                  <option value="Delhi Capitals">Delhi Capitals</option>
-                  <option value="Sunrisers Hyderabad">
-                    Sunrisers Hyderabad
-                  </option>
-                  <option value="Royal Challengers Bangalore">
-                    Royal Challengers Bangalore
-                  </option>
-                  <option value="Lucknow Super Giants">
-                    Lucknow Super Giants
-                  </option>
-                  <option value="Rajasthan Royals">Rajasthan Royals</option>
-                  <option value="Chennai Super Kings">
-                    Chennai Super Kings
-                  </option>
-                  <option value="Punjab Kings">Punjab Kings</option>
-                </select>
-                <label
-                  class="absolute top-0 start-0 p-4 h-full truncate pointer-events-none transition ease-in-out duration-100 border border-transparent dark:text-white peer-disabled:opacity-50 peer-disabled:pointer-events-none peer-focus:text-xs peer-focus:-translate-y-1.5 peer-focus:text-blue-300 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:-translate-y-1.5 peer-[:not(:placeholder-shown)]:text-blue-300"
-                  for="batting_team"
-                  >Select Batting Team</label
-                >
+              <!-- Form Grid -->
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Batting Team -->
+                <div class="space-y-2">
+                  <label for="batting_team" class="block text-sm font-semibold text-gray-700">
+                    <span class="flex items-center gap-2">
+                      <i data-lucide="users" class="w-4 h-4 text-blue-600"></i>
+                      Batting Team
+                    </span>
+                  </label>
+                  <select
+                    name="batting_team"
+                    id="batting_team"
+                    class="w-full px-4 py-3.5 bg-gray-50 border-2 border-gray-200 rounded-xl text-gray-900 font-medium focus:outline-none input-focus transition-all duration-200 hover:border-blue-300"
+                  >
+                    <option value="Mumbai Indians">Mumbai Indians</option>
+                    <option value="Gujarat Titans">Gujarat Titans</option>
+                    <option value="Kolkata Knight Riders">Kolkata Knight Riders</option>
+                    <option value="Delhi Capitals">Delhi Capitals</option>
+                    <option value="Sunrisers Hyderabad">Sunrisers Hyderabad</option>
+                    <option value="Royal Challengers Bangalore">Royal Challengers Bangalore</option>
+                    <option value="Lucknow Super Giants">Lucknow Super Giants</option>
+                    <option value="Rajasthan Royals">Rajasthan Royals</option>
+                    <option value="Chennai Super Kings">Chennai Super Kings</option>
+                    <option value="Punjab Kings">Punjab Kings</option>
+                  </select>
+                </div>
+
+                <!-- Bowling Team -->
+                <div class="space-y-2">
+                  <label for="bowling_team" class="block text-sm font-semibold text-gray-700">
+                    <span class="flex items-center gap-2">
+                      <i data-lucide="shield" class="w-4 h-4 text-purple-600"></i>
+                      Bowling Team
+                    </span>
+                  </label>
+                  <select
+                    name="bowling_team"
+                    id="bowling_team"
+                    required
+                    class="w-full px-4 py-3.5 bg-gray-50 border-2 border-gray-200 rounded-xl text-gray-900 font-medium focus:outline-none input-focus transition-all duration-200 hover:border-purple-300"
+                  >
+                    <option value="Mumbai Indians">Mumbai Indians</option>
+                    <option value="Gujarat Titans">Gujarat Titans</option>
+                    <option value="Kolkata Knight Riders">Kolkata Knight Riders</option>
+                    <option value="Delhi Capitals">Delhi Capitals</option>
+                    <option value="Sunrisers Hyderabad">Sunrisers Hyderabad</option>
+                    <option value="Royal Challengers Bangalore">Royal Challengers Bangalore</option>
+                    <option value="Lucknow Super Giants">Lucknow Super Giants</option>
+                    <option value="Rajasthan Royals">Rajasthan Royals</option>
+                    <option value="Chennai Super Kings">Chennai Super Kings</option>
+                    <option value="Punjab Kings">Punjab Kings</option>
+                  </select>
+                </div>
+
+                <!-- Venue -->
+                <div class="space-y-2">
+                  <label for="selected_city" class="block text-sm font-semibold text-gray-700">
+                    <span class="flex items-center gap-2">
+                      <i data-lucide="map-pin" class="w-4 h-4 text-pink-600"></i>
+                      Match Venue
+                    </span>
+                  </label>
+                  <select
+                    name="selected_city"
+                    id="selected_city"
+                    required
+                    class="w-full px-4 py-3.5 bg-gray-50 border-2 border-gray-200 rounded-xl text-gray-900 font-medium focus:outline-none input-focus transition-all duration-200 hover:border-pink-300"
+                  >
+                    <option value="Bangalore">Bangalore</option>
+                    <option value="Chandigarh">Chandigarh</option>
+                    <option value="Delhi">Delhi</option>
+                    <option value="Mumbai">Mumbai</option>
+                    <option value="Kolkata">Kolkata</option>
+                    <option value="Jaipur">Jaipur</option>
+                    <option value="Hyderabad">Hyderabad</option>
+                    <option value="Chennai">Chennai</option>
+                    <option value="Cape Town">Cape Town</option>
+                    <option value="Port Elizabeth">Port Elizabeth</option>
+                    <option value="Durban">Durban</option>
+                    <option value="Centurion">Centurion</option>
+                    <option value="East London">East London</option>
+                    <option value="Johannesburg">Johannesburg</option>
+                    <option value="Kimberley">Kimberley</option>
+                    <option value="Bloemfontein">Bloemfontein</option>
+                    <option value="Ahmedabad">Ahmedabad</option>
+                    <option value="Cuttack">Cuttack</option>
+                    <option value="Nagpur">Nagpur</option>
+                    <option value="Dharamsala">Dharamsala</option>
+                    <option value="Indore">Indore</option>
+                    <option value="Visakhapatnam">Visakhapatnam</option>
+                    <option value="Pune">Pune</option>
+                    <option value="Raipur">Raipur</option>
+                    <option value="Ranchi">Ranchi</option>
+                    <option value="Abu Dhabi">Abu Dhabi</option>
+                    <option value="Sharjah">Sharjah</option>
+                  </select>
+                </div>
+
+                <!-- Target -->
+                <div class="space-y-2">
+                  <label for="target" class="block text-sm font-semibold text-gray-700">
+                    <span class="flex items-center gap-2">
+                      <i data-lucide="target" class="w-4 h-4 text-yellow-600"></i>
+                      Target Runs
+                    </span>
+                  </label>
+                  <input
+                    type="number"
+                    name="target"
+                    id="target"
+                    required
+                    placeholder="Enter target runs"
+                    class="w-full px-4 py-3.5 bg-gray-50 border-2 border-gray-200 rounded-xl text-gray-900 font-medium placeholder-gray-400 focus:outline-none input-focus transition-all duration-200 hover:border-yellow-300"
+                  />
+                </div>
+
+                <!-- Score -->
+                <div class="space-y-2">
+                  <label for="score" class="block text-sm font-semibold text-gray-700">
+                    <span class="flex items-center gap-2">
+                      <i data-lucide="trending-up" class="w-4 h-4 text-green-600"></i>
+                      Current Score
+                    </span>
+                  </label>
+                  <input
+                    type="number"
+                    name="score"
+                    id="score"
+                    required
+                    placeholder="Enter current score"
+                    class="w-full px-4 py-3.5 bg-gray-50 border-2 border-gray-200 rounded-xl text-gray-900 font-medium placeholder-gray-400 focus:outline-none input-focus transition-all duration-200 hover:border-green-300"
+                  />
+                </div>
+
+                <!-- Balls Left -->
+                <div class="space-y-2">
+                  <label for="balls_left" class="block text-sm font-semibold text-gray-700">
+                    <span class="flex items-center gap-2">
+                      <i data-lucide="clock" class="w-4 h-4 text-red-600"></i>
+                      Balls Left
+                    </span>
+                  </label>
+                  <input
+                    type="number"
+                    name="balls_left"
+                    id="balls_left"
+                    required
+                    placeholder="Enter balls remaining"
+                    class="w-full px-4 py-3.5 bg-gray-50 border-2 border-gray-200 rounded-xl text-gray-900 font-medium placeholder-gray-400 focus:outline-none input-focus transition-all duration-200 hover:border-red-300"
+                  />
+                </div>
+
+                <!-- Wickets -->
+                <div class="space-y-2">
+                  <label for="wickets" class="block text-sm font-semibold text-gray-700">
+                    <span class="flex items-center gap-2">
+                      <i data-lucide="alert-triangle" class="w-4 h-4 text-orange-600"></i>
+                      Wickets Down
+                    </span>
+                  </label>
+                  <input
+                    type="number"
+                    name="wickets"
+                    id="wickets"
+                    required
+                    placeholder="Enter wickets fallen"
+                    class="w-full px-4 py-3.5 bg-gray-50 border-2 border-gray-200 rounded-xl text-gray-900 font-medium placeholder-gray-400 focus:outline-none input-focus transition-all duration-200 hover:border-orange-300"
+                  />
+                </div>
               </div>
 
-              <div class="relative min-w-[250px] sm:w-1/3 w-1/1 my-2">
-                <select
-                  name="bowling_team"
-                  id="bowling_team"
-                  required
-                  class="peer p-4 pe-9 block w-full bg-blue-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-blue-500 dark:border-transparent dark:text-white dark:focus:ring-blue-600 focus:pt-6 focus:pb-2 [&:not(:placeholder-shown)]:pt-6 [&:not(:placeholder-shown)]:pb-2 autofill:pt-6 autofill:pb-2"
+              <!-- Submit Button -->
+              <div class="pt-4 flex justify-center">
+                <button
+                  type="submit"
+                  class="group relative px-12 py-4 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 rounded-2xl text-white font-bold text-lg shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 overflow-hidden"
                 >
-                  <option value="Mumbai Indians">Mumbai Indians</option>
-                  <option value="Gujarat Titans">Gujarat Titans</option>
-                  <option value="Kolkata Knight Riders">
-                    Kolkata Knight Riders
-                  </option>
-                  <option value="Delhi Capitals">Delhi Capitals</option>
-                  <option value="Sunrisers Hyderabad">
-                    Sunrisers Hyderabad
-                  </option>
-                  <option value="Royal Challengers Bangalore">
-                    Royal Challengers Bangalore
-                  </option>
-                  <option value="Lucknow Super Giants">
-                    Lucknow Super Giants
-                  </option>
-                  <option value="Rajasthan Royals">Rajasthan Royals</option>
-                  <option value="Chennai Super Kings">
-                    Chennai Super Kings
-                  </option>
-                  <option value="Punjab Kings">Punjab Kings</option>
-                </select>
-                <label
-                  class="absolute top-0 start-0 p-4 h-full truncate pointer-events-none transition ease-in-out duration-100 border border-transparent dark:text-white peer-disabled:opacity-50 peer-disabled:pointer-events-none peer-focus:text-xs peer-focus:-translate-y-1.5 peer-focus:text-blue-300 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:-translate-y-1.5 peer-[:not(:placeholder-shown)]:text-blue-300"
-                  for="bowling_team"
-                  >Select Bowling Team</label
-                >
+                  <span class="relative z-10 flex items-center gap-3">
+                    <i data-lucide="zap" class="w-5 h-5"></i>
+                    Predict Victory
+                  </span>
+                  <div class="absolute inset-0 bg-gradient-to-r from-blue-700 via-purple-700 to-pink-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </button>
               </div>
-
-              <div class="relative min-w-[250px] sm:w-1/3 w-1/1 my-2">
-                <select
-                  name="selected_city"
-                  required
-                  class="peer p-4 pe-9 block w-full bg-blue-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-blue-500 dark:border-transparent dark:text-white dark:focus:ring-blue-600 focus:pt-6 focus:pb-2 [&:not(:placeholder-shown)]:pt-6 [&:not(:placeholder-shown)]:pb-2 autofill:pt-6 autofill:pb-2"
-                >
-                  <option value="Bangalore">Bangalore</option>
-                  <option value="Chandigarh">Chandigarh</option>
-                  <option value="Delhi">Delhi</option>
-                  <option value="Mumbai">Mumbai</option>
-                  <option value="Kolkata">Kolkata</option>
-                  <option value="Jaipur">Jaipur</option>
-                  <option value="Hyderabad">Hyderabad</option>
-                  <option value="Chennai">Chennai</option>
-                  <option value="Cape Town">Cape Town</option>
-                  <option value="Port Elizabeth">Port Elizabeth</option>
-                  <option value="Durban">Durban</option>
-                  <option value="Centurion">Centurion</option>
-                  <option value="East London">East London</option>
-                  <option value="Johannesburg">Johannesburg</option>
-                  <option value="Kimberley">Kimberley</option>
-                  <option value="Bloemfontein">Bloemfontein</option>
-                  <option value="Ahmedabad">Ahmedabad</option>
-                  <option value="Cuttack">Cuttack</option>
-                  <option value="Nagpur">Nagpur</option>
-                  <option value="Dharamsala">Dharamsala</option>
-                  <option value="Indore">Indore</option>
-                  <option value="Visakhapatnam">Visakhapatnam</option>
-                  <option value="Pune">Pune</option>
-                  <option value="Raipur">Raipur</option>
-                  <option value="Ranchi">Ranchi</option>
-                  <option value="Abu Dhabi">Abu Dhabi</option>
-                  <option value="Sharjah">Sharjah</option>
-                </select>
-
-                <label
-                  class="absolute top-0 start-0 p-4 h-full truncate pointer-events-none transition ease-in-out duration-100 border border-transparent dark:text-white peer-disabled:opacity-50 peer-disabled:pointer-events-none peer-focus:text-xs peer-focus:-translate-y-1.5 peer-focus:text-blue-300 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:-translate-y-1.5 peer-[:not(:placeholder-shown)]:text-blue-300"
-                  for="selected_city"
-                  >Select Match Venue</label
-                >
-              </div>
-
-              <div class="relative min-w-[250px] sm:w-1/3 w-1/1 my-2">
-                <input
-                  class="peer p-4 pe-9 block w-full bg-blue-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-blue-500 dark:border-transparent dark:text-white dark:focus:ring-blue-600 focus:pt-6 focus:pb-2 [&:not(:placeholder-shown)]:pt-6 [&:not(:placeholder-shown)]:pb-2 autofill:pt-6 autofill:pb-2"
-                  type="number"
-                  name="target"
-                  required
-                />
-                <label
-                  for="hs-floating-input-email-value"
-                  class="absolute top-0 start-0 p-4 h-full truncate pointer-events-none transition ease-in-out duration-100 border border-transparent dark:text-white peer-disabled:opacity-50 peer-disabled:pointer-events-none peer-focus:text-xs peer-focus:-translate-y-1.5 peer-focus:text-white peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:-translate-y-1.5 peer-[:not(:placeholder-shown)]:text-white"
-                  for="target"
-                  >Target</label
-                >
-              </div>
-              <div class="relative min-w-[250px] sm:w-1/3 w-1/1my-2">
-                <input
-                  class="peer p-4 pe-9 block w-full bg-blue-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-blue-500 dark:border-transparent dark:text-white dark:focus:ring-blue-600 focus:pt-6 focus:pb-2 [&:not(:placeholder-shown)]:pt-6 [&:not(:placeholder-shown)]:pb-2 autofill:pt-6 autofill:pb-2"
-                  type="number"
-                  name="score"
-                  required
-                />
-                <label
-                  for="hs-floating-input-email-value"
-                  class="absolute top-0 start-0 p-4 h-full truncate pointer-events-none transition ease-in-out duration-100 border border-transparent dark:text-white peer-disabled:opacity-50 peer-disabled:pointer-events-none peer-focus:text-xs peer-focus:-translate-y-1.5 peer-focus:text-blue-300 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:-translate-y-1.5 peer-[:not(:placeholder-shown)]:text-white"
-                  for="score"
-                  >Score</label
-                >
-              </div>
-
-              <div class="relative min-w-[250px] sm:w-1/3 w-1/1 my-2">
-                <input
-                  class="peer p-4 pe-9 block w-full bg-blue-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-blue-500 dark:border-transparent dark:text-white dark:focus:ring-blue-600 focus:pt-6 focus:pb-2 [&:not(:placeholder-shown)]:pt-6 [&:not(:placeholder-shown)]:pb-2 autofill:pt-6 autofill:pb-2"
-                  type="number"
-                  name="balls_left"
-                  required
-                />
-                <label
-                  for="hs-floating-input-email-value"
-                  class="absolute top-0 start-0 p-4 h-full truncate pointer-events-none transition ease-in-out duration-100 border border-transparent dark:text-white peer-disabled:opacity-50 peer-disabled:pointer-events-none peer-focus:text-xs peer-focus:-translate-y-1.5 peer-focus:text-white peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:-translate-y-1.5 peer-[:not(:placeholder-shown)]:text-white"
-                  for="balls_left"
-                  >Balls Left</label
-                >
-              </div>
-
-              <div class="relative min-w-[250px] sm:w-1/3 w-1/1 my-2">
-                <input
-                  class="peer p-4 pe-9 block w-full bg-blue-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-blue-500 dark:border-transparent dark:text-white dark:focus:ring-blue-600 focus:pt-6 focus:pb-2 [&:not(:placeholder-shown)]:pt-6 [&:not(:placeholder-shown)]:pb-2 autofill:pt-6 autofill:pb-2"
-                  type="number"
-                  name="wickets"
-                  required
-                />
-                <label
-                  for="hs-floating-input-email-value"
-                  class="absolute top-0 start-0 p-4 h-full truncate pointer-events-none transition ease-in-out duration-100 border border-transparent dark:text-white peer-disabled:opacity-50 peer-disabled:pointer-events-none peer-focus:text-xs peer-focus:-translate-y-1.5 peer-focus:text-white peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:-translate-y-1.5 peer-[:not(:placeholder-shown)]:text-white"
-                  for="wickets"
-                  >Wickets Down</label
-                >
-              </div>
-
-              <button
-                type="submit"
-                class="sm:w-full my-4 rounded-md bg-gradient-to-tl from-pink-500 via-red-500 to-yellow-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              >
-                Predict Now
-              </button>
             </form>
           </div>
         </div>
       </div>
-    </div>
-
-    <div class="bg-[#040A25]">
-      <hr />
-      <p class="text-white py-2 w-full text-center">
-        Made with ❤️ by Rohit Yadav
-      </p>
     </div>
   </body>
 </html>
